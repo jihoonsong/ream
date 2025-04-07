@@ -37,11 +37,11 @@ pub struct Store {
 
 impl Store {
     pub fn is_previous_epoch_justified(&self) -> bool {
-        let current_epoch = compute_epoch_at_slot(self.get_current_store_slot());
+        let current_epoch = self.get_current_store_epoch();
         self.justified_checkpoint.epoch + 1 == current_epoch
     }
 
-    pub fn get_current_store_slot(&self) -> u64 {
+    pub fn get_current_store_epoch(&self) -> u64 {
         compute_epoch_at_slot(self.get_current_slot())
     }
 
@@ -50,7 +50,7 @@ impl Store {
     }
 
     pub fn get_slots_since_genesis(&self) -> u64 {
-        self.time - self.genesis_time
+        (self.time - self.genesis_time) / SECONDS_PER_SLOT
     }
 
     pub fn get_ancestor(&self, root: B256, slot: u64) -> anyhow::Result<B256> {
@@ -97,7 +97,7 @@ impl Store {
             return Ok(false);
         }
 
-        let current_epoch = compute_epoch_at_slot(self.get_current_slot());
+        let current_epoch = self.get_current_store_epoch();
         let voting_source = self.get_voting_source(block_root);
 
         let correct_justified = self.justified_checkpoint.epoch == GENESIS_EPOCH || {
@@ -214,7 +214,7 @@ impl Store {
     pub fn get_voting_source(&self, block_root: B256) -> Checkpoint {
         let block = &self.blocks[&block_root];
 
-        let current_epoch = self.get_current_slot();
+        let current_epoch = self.get_current_store_epoch();
         let block_epoch = compute_epoch_at_slot(block.slot);
 
         if current_epoch > block_epoch {
