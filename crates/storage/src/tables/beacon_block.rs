@@ -6,7 +6,7 @@ use redb::{Database, Durability, TableDefinition};
 use tree_hash::TreeHash;
 
 use super::{
-    SSZEncoding, Table, slot_index::SlotIndexTable, state_root_index::StateRootIndexTable,
+    parent_root_index::ParentRootIndexMultimapTable, slot_index::SlotIndexTable, state_root_index::StateRootIndexTable, MultimapTable, SSZEncoding, Table
 };
 use crate::errors::StoreError;
 
@@ -48,6 +48,10 @@ impl Table for BeaconBlockTable {
         };
         state_root_index_table.insert(value.message.state_root, block_root)?;
 
+        let parent_root_index_table = ParentRootIndexMultimapTable {
+            db: self.db.clone(),
+        };
+        parent_root_index_table.insert(value.message.parent_root, block_root)?;
         let mut write_txn = self.db.begin_write()?;
         write_txn.set_durability(Durability::Immediate);
         let mut table = write_txn.open_table(BEACON_BLOCK_TABLE)?;

@@ -57,8 +57,7 @@ pub async fn get_state_from_id(state_id: ID, db: &ReamDB) -> Result<BeaconState,
                 .map_err(|err| {
                     error!("Failed to get finalized_checkpoint, error: {err:?}");
                     ApiError::InternalError
-                })?
-                .ok_or_else(|| ApiError::NotFound("Finalized checkpoint not found".to_string()))?;
+                })?;
 
             Ok(Some(finalized_checkpoint.root))
         }
@@ -69,8 +68,7 @@ pub async fn get_state_from_id(state_id: ID, db: &ReamDB) -> Result<BeaconState,
                 .map_err(|err| {
                     error!("Failed to get justified_checkpoint, error: {err:?}");
                     ApiError::InternalError
-                })?
-                .ok_or_else(|| ApiError::NotFound("Justified checkpoint not found".to_string()))?;
+                })?;
 
             Ok(Some(justified_checkpoint.root))
         }

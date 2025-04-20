@@ -7,29 +7,13 @@ use crate::{
     dir,
     errors::StoreError,
     tables::{
-        beacon_block::{BEACON_BLOCK_TABLE, BeaconBlockTable},
-        beacon_state::{BEACON_STATE_TABLE, BeaconStateTable},
-        blobs_and_proofs::{BLOBS_AND_PROOFS_TABLE, BlobsAndProofsTable},
-        block_timeliness::{BLOCK_TIMELINESS_TABLE, BlockTimelinessTable},
-        checkpoint_states::{CHECKPOINT_STATES_TABLE, CheckpointStatesTable},
-        equivocating_indices::{EQUIVOCATING_INDICES_FIELD, EquivocatingIndicesField},
-        finalized_checkpoint::{FINALIZED_CHECKPOINT_FIELD, FinalizedCheckpointField},
-        genesis_time::{GENESIS_TIME_FIELD, GenesisTimeField},
-        justified_checkpoint::{JUSTIFIED_CHECKPOINT_FIELD, JustifiedCheckpointField},
-        latest_messages::{LATEST_MESSAGES_TABLE, LatestMessagesTable},
-        proposer_boost_root::{PROPOSER_BOOST_ROOT_FIELD, ProposerBoostRootField},
-        slot_index::{SLOT_INDEX_TABLE, SlotIndexTable},
-        state_root_index::{STATE_ROOT_INDEX_TABLE, StateRootIndexTable},
-        time::{TIME_FIELD, TimeField},
-        unrealized_finalized_checkpoint::{
-            UNREALIZED_FINALIZED_CHECKPOINT_FIELD, UnrealizedFinalizedCheckpointField,
-        },
-        unrealized_justifications::{
-            UNREALIZED_JUSTIFICATIONS_TABLE, UnrealizedJustificationsTable,
-        },
-        unrealized_justified_checkpoint::{
-            UNREALIZED_JUSTIFED_CHECKPOINT_FIELD, UnrealizedJustifiedCheckpointField,
-        },
+        beacon_block::{BeaconBlockTable, BEACON_BLOCK_TABLE}, beacon_state::{BeaconStateTable, BEACON_STATE_TABLE}, blobs_and_proofs::{BlobsAndProofsTable, BLOBS_AND_PROOFS_TABLE}, block_timeliness::{BlockTimelinessTable, BLOCK_TIMELINESS_TABLE}, checkpoint_states::{CheckpointStatesTable, CHECKPOINT_STATES_TABLE}, equivocating_indices::{EquivocatingIndicesField, EQUIVOCATING_INDICES_FIELD}, finalized_checkpoint::{FinalizedCheckpointField, FINALIZED_CHECKPOINT_FIELD}, genesis_time::{GenesisTimeField, GENESIS_TIME_FIELD}, justified_checkpoint::{JustifiedCheckpointField, JUSTIFIED_CHECKPOINT_FIELD}, latest_messages::{LatestMessagesTable, LATEST_MESSAGES_TABLE}, parent_root_index::{ParentRootIndexMultimapTable, PARENT_ROOT_INDEX_MULTIMAP_TABLE}, proposer_boost_root::{ProposerBoostRootField, PROPOSER_BOOST_ROOT_FIELD}, slot_index::{SlotIndexTable, SLOT_INDEX_TABLE}, state_root_index::{StateRootIndexTable, STATE_ROOT_INDEX_TABLE}, time::{TimeField, TIME_FIELD}, unrealized_finalized_checkpoint::{
+            UnrealizedFinalizedCheckpointField, UNREALIZED_FINALIZED_CHECKPOINT_FIELD
+        }, unrealized_justifications::{
+            UnrealizedJustificationsTable, UNREALIZED_JUSTIFICATIONS_TABLE
+        }, unrealized_justified_checkpoint::{
+            UnrealizedJustifiedCheckpointField, UNREALIZED_JUSTIFED_CHECKPOINT_FIELD
+        }
     },
 };
 
@@ -71,6 +55,7 @@ impl ReamDB {
         write_txn.open_table(GENESIS_TIME_FIELD)?;
         write_txn.open_table(JUSTIFIED_CHECKPOINT_FIELD)?;
         write_txn.open_table(LATEST_MESSAGES_TABLE)?;
+        write_txn.open_multimap_table(PARENT_ROOT_INDEX_MULTIMAP_TABLE)?;
         write_txn.open_table(PROPOSER_BOOST_ROOT_FIELD)?;
         write_txn.open_table(SLOT_INDEX_TABLE)?;
         write_txn.open_table(STATE_ROOT_INDEX_TABLE)?;
@@ -121,6 +106,12 @@ impl ReamDB {
 
     pub fn unrealized_justifications_provider(&self) -> UnrealizedJustificationsTable {
         UnrealizedJustificationsTable {
+            db: self.db.clone(),
+        }
+    }
+
+    pub fn parent_root_index_multimap_provider(&self) -> ParentRootIndexMultimapTable {
+        ParentRootIndexMultimapTable {
             db: self.db.clone(),
         }
     }

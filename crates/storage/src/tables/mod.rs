@@ -15,6 +15,7 @@ pub mod time;
 pub mod unrealized_finalized_checkpoint;
 pub mod unrealized_justifications;
 pub mod unrealized_justified_checkpoint;
+pub mod parent_root_index;
 
 use std::{any::type_name, fmt::Debug};
 
@@ -35,10 +36,23 @@ pub trait Table {
 }
 
 #[allow(clippy::result_large_err)]
+pub trait MultimapTable {
+    type Key;
+
+    type GetValue;
+
+    type InsertValue;
+
+    fn get(&self, key: Self::Key) -> Result<Option<Self::GetValue>, StoreError>;
+
+    fn insert(&self, key: Self::Key, value: Self::InsertValue) -> Result<(), StoreError>;
+}
+
+#[allow(clippy::result_large_err)]
 pub trait Field {
     type Value;
 
-    fn get(&self) -> Result<Option<Self::Value>, StoreError>;
+    fn get(&self) -> Result<Self::Value, StoreError>;
 
     fn insert(&self, value: Self::Value) -> Result<(), StoreError>;
 }

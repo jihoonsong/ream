@@ -52,8 +52,7 @@ pub async fn get_block_root_from_id(block_id: ID, db: &ReamDB) -> Result<B256, A
                 .map_err(|err| {
                     error!("Failed to get block by block_root, error: {err:?}");
                     ApiError::InternalError
-                })?
-                .ok_or_else(|| ApiError::NotFound("Finalized checkpoint not found".to_string()))?;
+                })?;
 
             Ok(Some(finalized_checkpoint.root))
         }
@@ -64,8 +63,7 @@ pub async fn get_block_root_from_id(block_id: ID, db: &ReamDB) -> Result<B256, A
                 .map_err(|err| {
                     error!("Failed to get block by block_root, error: {err:?}");
                     ApiError::InternalError
-                })?
-                .ok_or_else(|| ApiError::NotFound("Justified checkpoint not found".to_string()))?;
+                })?;
 
             Ok(Some(justified_checkpoint.root))
         }
