@@ -28,7 +28,7 @@ impl Table for BlobsAndProofsTable {
 
     fn get(&self, key: Self::Key) -> Result<Option<Self::Value>, StoreError> {
         let read_txn = self.db.begin_read()?;
-        
+
         let table = read_txn.open_table(BLOBS_AND_PROOFS_TABLE)?;
         let result = table.get(key)?;
         Ok(result.map(|res| res.value()))
