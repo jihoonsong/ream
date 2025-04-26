@@ -51,24 +51,18 @@ impl RandaoResponse {
 pub async fn get_state_from_id(state_id: ID, db: &ReamDB) -> Result<BeaconState, ApiError> {
     let block_root = match state_id {
         ID::Finalized => {
-            let finalized_checkpoint = db
-                .finalized_checkpoint_provider()
-                .get()
-                .map_err(|err| {
-                    error!("Failed to get finalized_checkpoint, error: {err:?}");
-                    ApiError::InternalError
-                })?;
+            let finalized_checkpoint = db.finalized_checkpoint_provider().get().map_err(|err| {
+                error!("Failed to get finalized_checkpoint, error: {err:?}");
+                ApiError::InternalError
+            })?;
 
             Ok(Some(finalized_checkpoint.root))
         }
         ID::Justified => {
-            let justified_checkpoint = db
-                .justified_checkpoint_provider()
-                .get()
-                .map_err(|err| {
-                    error!("Failed to get justified_checkpoint, error: {err:?}");
-                    ApiError::InternalError
-                })?;
+            let justified_checkpoint = db.justified_checkpoint_provider().get().map_err(|err| {
+                error!("Failed to get justified_checkpoint, error: {err:?}");
+                ApiError::InternalError
+            })?;
 
             Ok(Some(justified_checkpoint.root))
         }

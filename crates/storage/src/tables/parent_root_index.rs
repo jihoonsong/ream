@@ -3,16 +3,17 @@ use std::sync::Arc;
 use alloy_primitives::B256;
 use redb::{Database, Durability, MultimapTableDefinition};
 
-use super::{
-    MultimapTable, SSZEncoding
-};
+use super::{MultimapTable, SSZEncoding};
 use crate::errors::StoreError;
 
 /// Table definition for the Parent Root Index Multimap table
 ///
 /// Key: ParentRoot
 /// Value: BlockRoot's
-pub const PARENT_ROOT_INDEX_MULTIMAP_TABLE: MultimapTableDefinition<SSZEncoding<B256>, SSZEncoding<B256>> = MultimapTableDefinition::new("parent_root_index_multimap");
+pub const PARENT_ROOT_INDEX_MULTIMAP_TABLE: MultimapTableDefinition<
+    SSZEncoding<B256>,
+    SSZEncoding<B256>,
+> = MultimapTableDefinition::new("parent_root_index_multimap");
 
 pub struct ParentRootIndexMultimapTable {
     pub db: Arc<Database>,
@@ -29,11 +30,11 @@ impl MultimapTable for ParentRootIndexMultimapTable {
         let read_txn = self.db.begin_read()?;
 
         let table = read_txn.open_multimap_table(PARENT_ROOT_INDEX_MULTIMAP_TABLE)?;
-        let mut result = table.get(key)?;
+        let result = table.get(key)?;
         let mut values = vec![];
-        while let Some(value) = result.next() {
+        for value in result {
             values.push(value?.value());
-        };
+        }
         Ok(Some(values))
     }
 
@@ -48,6 +49,4 @@ impl MultimapTable for ParentRootIndexMultimapTable {
     }
 }
 
-pub struct ParentRootIndex<> {
-
-}
+pub struct ParentRootIndex {}

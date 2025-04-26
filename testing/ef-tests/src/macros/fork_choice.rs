@@ -6,20 +6,13 @@ macro_rules! test_fork_choice {
             #[allow(non_snake_case)]
             mod [<tests_ $path>] {
                 use std::fs;
-
-                use alloy_consensus::Blob;
                 use alloy_primitives::{hex, map::HashMap, B256, hex::FromHex};
                 use ream_bls::BLSSignature;
                 use ream_consensus::{
-                    attestation::Attestation,
-                    attester_slashing::AttesterSlashing,
-                    checkpoint::Checkpoint,
-                    deneb::{
+                    attestation::Attestation, attester_slashing::AttesterSlashing, blob_sidecar::BlobIdentifier, checkpoint::Checkpoint, deneb::{
                         beacon_block::{BeaconBlock, SignedBeaconBlock},
                         beacon_state::BeaconState,
-                    },
-                    execution_engine::{mock_engine::MockExecutionEngine, rpc_types::get_blobs::BlobAndProofV1}, polynomial_commitments::kzg_proof::KZGProof,
-                    blob_sidecar::BlobIdentifier,
+                    }, execution_engine::{mock_engine::MockExecutionEngine, rpc_types::get_blobs::{Blob, BlobAndProofV1}}, polynomial_commitments::kzg_proof::KZGProof
                 };
                 use ream_fork_choice::{
                     handlers::{on_attestation, on_attester_slashing, on_block, on_tick},
@@ -89,7 +82,7 @@ macro_rules! test_fork_choice {
                     pub valid: Option<bool>,
                 }
 
-                #[derive(Deserialize)]
+                #[derive(Deserialize, Debug)]
                 #[serde(untagged)]
                 pub enum ForkChoiceStep {
                     Tick(Tick),
@@ -135,7 +128,7 @@ macro_rules! test_fork_choice {
                                 .expect("Failed to read anchor_block.ssz_snappy");
 
                         let reamdb = ReamDB::new(None, true).expect("count not find reabdb");
-                        let mut store = get_forkchoice_store(anchor_state, SignedBeaconBlock { message: anchor_block, signature: BLSSignature::default() }, reamdb)
+                        let mut store = get_forkchoice_store(anchor_state, anchor_block, reamdb)
                             .expect("get_forkchoice_store failed");
 
                         for step in steps {

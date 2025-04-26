@@ -8,6 +8,7 @@ pub mod finalized_checkpoint;
 pub mod genesis_time;
 pub mod justified_checkpoint;
 pub mod latest_messages;
+pub mod parent_root_index;
 pub mod proposer_boost_root;
 pub mod slot_index;
 pub mod state_root_index;
@@ -15,7 +16,6 @@ pub mod time;
 pub mod unrealized_finalized_checkpoint;
 pub mod unrealized_justifications;
 pub mod unrealized_justified_checkpoint;
-pub mod parent_root_index;
 
 use std::{any::type_name, fmt::Debug};
 

@@ -6,7 +6,8 @@ use redb::{Database, Durability, TableDefinition};
 use tree_hash::TreeHash;
 
 use super::{
-    parent_root_index::ParentRootIndexMultimapTable, slot_index::SlotIndexTable, state_root_index::StateRootIndexTable, MultimapTable, SSZEncoding, Table
+    MultimapTable, SSZEncoding, Table, parent_root_index::ParentRootIndexMultimapTable,
+    slot_index::SlotIndexTable, state_root_index::StateRootIndexTable,
 };
 use crate::errors::StoreError;
 
