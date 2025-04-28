@@ -7,12 +7,13 @@ macro_rules! test_fork_choice {
             mod [<tests_ $path>] {
                 use std::fs;
                 use alloy_primitives::{hex, map::HashMap, B256, hex::FromHex};
+                use alloy_consensus::Blob;
                 use ream_bls::BLSSignature;
                 use ream_consensus::{
                     attestation::Attestation, attester_slashing::AttesterSlashing, blob_sidecar::BlobIdentifier, checkpoint::Checkpoint, deneb::{
                         beacon_block::{BeaconBlock, SignedBeaconBlock},
                         beacon_state::BeaconState,
-                    }, execution_engine::{mock_engine::MockExecutionEngine, rpc_types::get_blobs::{Blob, BlobAndProofV1}}, polynomial_commitments::kzg_proof::KZGProof
+                    }, execution_engine::{mock_engine::MockExecutionEngine, rpc_types::get_blobs::{BlobAndProofV1}}, polynomial_commitments::kzg_proof::KZGProof
                 };
                 use ream_fork_choice::{
                     handlers::{on_attestation, on_attester_slashing, on_block, on_tick},
