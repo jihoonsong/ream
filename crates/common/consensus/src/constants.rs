@@ -158,3 +158,11 @@ pub fn genesis_validators_root() -> B256 {
         .get()
         .expect("GENESIS_VALIDATORS_ROOT wasn't set")
 }
+
+// Field indices
+pub const BEACON_STATE_SLOT_INDEX: u64 = 2;
+pub const BEACON_STATE_SLASHINGS_INDEX: u64 = 14;
+
+// Field generalized indices
+pub const BEACON_STATE_SLOT_GENERALIZED_INDEX: u64 = 64 + BEACON_STATE_SLOT_INDEX;
+pub const BEACON_STATE_SLASHINGS_GENERALIZED_INDEX: u64 = 64 + BEACON_STATE_SLASHINGS_INDEX;
