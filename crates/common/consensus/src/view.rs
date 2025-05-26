@@ -5,7 +5,7 @@ use ream_merkle::multiproof::Multiproof;
 use serde::{Deserialize, Serialize};
 use ssz_types::{
     FixedVector, VariableList,
-    typenum::{U8192, U65536, U1099511627776},
+    typenum::{U8192, U65536},
 };
 use tree_hash::TreeHash;
 
@@ -33,8 +33,8 @@ pub trait LatestBlockHeaderView: CoreView {
 }
 
 pub trait ValidatorView: CoreView {
-    fn validators(&self) -> anyhow::Result<&VariableList<Validator, U1099511627776>>;
-    fn validators_mut(&mut self) -> anyhow::Result<&mut VariableList<Validator, U1099511627776>>;
+    fn validators(&self) -> anyhow::Result<&VariableList<Validator, U8192>>;
+    fn validators_mut(&mut self) -> anyhow::Result<&mut VariableList<Validator, U8192>>;
 }
 
 pub trait SlashingsView: CoreView {
@@ -54,7 +54,7 @@ pub struct PartialBeaconState {
 
     pub latest_block_header: Option<BeaconBlockHeader>,
 
-    pub validators: Option<VariableList<Validator, U1099511627776>>,
+    pub validators: Option<VariableList<Validator, U8192>>,
 
     pub randao_mixes: Option<FixedVector<B256, U65536>>,
     pub slashings: Option<FixedVector<u64, U8192>>,
@@ -84,13 +84,13 @@ impl LatestBlockHeaderView for PartialBeaconState {
 }
 
 impl ValidatorView for PartialBeaconState {
-    fn validators(&self) -> anyhow::Result<&VariableList<Validator, U1099511627776>> {
+    fn validators(&self) -> anyhow::Result<&VariableList<Validator, U8192>> {
         self.validators
             .as_ref()
             .ok_or(anyhow::anyhow!("Validators are not set"))
     }
 
-    fn validators_mut(&mut self) -> anyhow::Result<&mut VariableList<Validator, U1099511627776>> {
+    fn validators_mut(&mut self) -> anyhow::Result<&mut VariableList<Validator, U8192>> {
         self.validators
             .as_mut()
             .ok_or(anyhow::anyhow!("Validators are not set"))
@@ -264,7 +264,7 @@ pub struct PartialBeaconStateBuilder {
 
     pub slot: Option<u64>,
     pub latest_block_header: Option<BeaconBlockHeader>,
-    pub validators: Option<VariableList<Validator, U1099511627776>>,
+    pub validators: Option<VariableList<Validator, U8192>>,
     pub randao_mixes: Option<FixedVector<B256, U65536>>,
     pub slashings: Option<FixedVector<u64, U8192>>,
 }
@@ -295,7 +295,7 @@ impl PartialBeaconStateBuilder {
         }
     }
 
-    pub fn with_validators(self, validators: &VariableList<Validator, U1099511627776>) -> Self {
+    pub fn with_validators(self, validators: &VariableList<Validator, U8192>) -> Self {
         Self {
             validators: Some(validators.clone()),
             ..self
