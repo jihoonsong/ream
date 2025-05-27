@@ -150,7 +150,7 @@ pub struct BeaconState {
     pub eth1_deposit_index: u64,
 
     // Registry
-    pub validators: VariableList<Validator, U8192>,
+    pub validators: VariableList<Validator, U1099511627776>,
     #[serde(with = "quoted_u64_var_list")]
     pub balances: VariableList<u64, U1099511627776>,
 
