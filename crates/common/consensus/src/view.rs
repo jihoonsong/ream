@@ -319,6 +319,7 @@ impl PartialBeaconStateBuilder {
     pub fn build(self) -> anyhow::Result<PartialBeaconState> {
         let multiproof = self.multiproof;
 
+        println!("1");
         if self.slot.is_some() {
             let slot = self.slot.expect("Slot is not set");
             ensure!(
@@ -332,6 +333,7 @@ impl PartialBeaconStateBuilder {
             );
         }
 
+        println!("2");
         if self.latest_block_header.is_some() {
             let latest_block_header_root = self
                 .latest_block_header
@@ -349,6 +351,7 @@ impl PartialBeaconStateBuilder {
             );
         }
 
+        println!("3");
         if self.validators.is_some() {
             let validators_root = self
                 .validators
@@ -366,6 +369,7 @@ impl PartialBeaconStateBuilder {
             );
         }
 
+        println!("4");
         if self.randao_mixes.is_some() {
             let randao_mixes_root = self
                 .randao_mixes
@@ -383,6 +387,7 @@ impl PartialBeaconStateBuilder {
             );
         }
 
+        println!("5");
         if self.slashings.is_some() {
             let slashings_root = self
                 .slashings
@@ -400,6 +405,7 @@ impl PartialBeaconStateBuilder {
             );
         }
 
+        println!("6");
         multiproof.verify(self.root)?;
 
         Ok(PartialBeaconState {
