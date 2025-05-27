@@ -106,3 +106,6 @@ ream-validator = { path = "crates/common/validator" }
 
 [patch.crates-io]
 ethereum_hashing = { git = "https://github.com/ReamLabs/ethereum_hashing.git" }
+
+[target.'cfg(feature = "zkvm")'.workspace.dependencies]
+ssz_types = { git = "https://github.com/jihoonsong/ssz_types", rev = "c67c92bacf921468bc7204db2aade36b2d731845" }
