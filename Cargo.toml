@@ -72,7 +72,7 @@ serde_json = "1.0.139"
 serde_yaml = "0.9"
 sha2 = "0.10"
 snap = "1.1"
-ssz_types = "0.11"
+ssz_types = { git = "https://github.com/jihoonsong/ssz_types" }
 tempfile = "3.19"
 thiserror = "2.0.11"
 tokio = { version = "1.42", features = ["rt", "rt-multi-thread", "sync", "signal", "time", "macros"] }
@@ -106,6 +106,5 @@ ream-validator = { path = "crates/common/validator" }
 
 [patch.crates-io]
 ethereum_hashing = { git = "https://github.com/ReamLabs/ethereum_hashing.git" }
-
-[target.'cfg(feature = "zkvm")'.workspace.dependencies]
-ssz_types = { git = "https://github.com/jihoonsong/ssz_types", rev = "c67c92bacf921468bc7204db2aade36b2d731845" }
+ssz_types = { git = "https://github.com/jihoonsong/ssz_types" }
+typenum = { git = "https://github.com/jihoonsong/typenum" }

@@ -1329,7 +1329,7 @@ checksum = "1bfb12502f3fc46cca1bb51ac28df9d618d813cdc3d2f25b9fe775a34af26bb3"
 dependencies = [
  "generic-array",
  "rand_core 0.6.4",
- "typenum",
+ "typenum 1.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -1838,7 +1838,7 @@ dependencies = [
  "serde",
  "serde_derive",
  "smallvec",
- "typenum",
+ "typenum 1.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -2129,7 +2129,7 @@ version = "0.14.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "85649ca51fd72272d7821adaf274ad91c288277713d9c18820d8499a7ff69e9a"
 dependencies = [
- "typenum",
+ "typenum 1.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "version_check",
  "zeroize",
 ]
@@ -3383,7 +3383,7 @@ dependencies = [
  "rand 0.8.5",
  "serde",
  "sha2 0.9.9",
- "typenum",
+ "typenum 1.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -5538,8 +5538,7 @@ dependencies = [
 [[package]]
 name = "ssz_types"
 version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "75b55bedc9a18ed2860a46d6beb4f4082416ee1d60be0cc364cebdcdddc7afd4"
+source = "git+https://github.com/jihoonsong/ssz_types#c67c92bacf921468bc7204db2aade36b2d731845"
 dependencies = [
  "ethereum_serde_utils",
  "ethereum_ssz",
@@ -5548,7 +5547,7 @@ dependencies = [
  "serde_derive",
  "smallvec",
  "tree_hash",
- "typenum",
+ "typenum 1.18.0 (git+https://github.com/jihoonsong/typenum)",
 ]
 
 [[package]]
@@ -5990,7 +5989,7 @@ dependencies = [
  "ethereum_hashing",
  "ethereum_ssz",
  "smallvec",
- "typenum",
+ "typenum 1.18.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -6016,6 +6015,11 @@ name = "typenum"
 version = "1.18.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1dccffe3ce07af9386bfd29e80c0ab1a8205a2fc34e4bcd40364df902cfa8f3f"
+
+[[package]]
+name = "typenum"
+version = "1.18.0"
+source = "git+https://github.com/jihoonsong/typenum#10c38bfe7cd1c73c5cc12d8e789faac2ab2b93af"
 
 [[package]]
 name = "ucd-trie"
